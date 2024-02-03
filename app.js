@@ -8,7 +8,7 @@ const app = express();
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'phpmyadmin',
-    password: '123456789',
+    password: '0z0x0c0v0b0n0m',
     database: 'mydb',
 });
 
@@ -61,8 +61,16 @@ app.get('/login', (req, res) => {
 
 
 app.get('/about', (req, res) => {
-    res.render('pages/about', { req: req })
+
+    const dados = [
+        { titulo: "Post 1", conteudo: "Conteúdo post 1"},
+        { titulo: "Post 2", conteudo: "Conteúdo post 2"},
+        { titulo: "Post 3", conteudo: "Conteúdo post 3"}
+    ];
+
+        res.render('pages/about', { req: req, posts: dados });
 });
+
 
 // Rota para processar o formulário de login
 app.post('/login', (req, res) => {
