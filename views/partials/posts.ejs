@@ -1,6 +1,74 @@
+
 <div>
-  <% posts.forEach(post => { %>
-    <h3><%= post.titulo %></h3>
-    <P><u><%= post.conteudo %></u></P>
-  <%  }) %>
+<% posts.forEach(post => { %>
+  <% if (post.id % 2 === 0) { %>
+    <div id="posts">
+      <div class="titlePost">
+        <p><%= post.titulo %></p>
+      </div>
+      <div class="textPost">
+        <p><%= post.conteudo %></p>
+      </div>
+    </div>
+  <% } else  { %>
+    <div id="posts" class="right">
+      <div class="titlePost">
+        <p><%= post.titulo %></p>
+      </div>
+      <div class="textPost">
+        <p><%= post.conteudo %></p>
+      </div>
+    </div>
+  <% } %>
+<% }); %>
+
 </div>
+
+<style>
+  /*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+  #posts{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 40%;
+    background-color: white;
+    border-radius: 20px;
+    transition: 0.5s;
+  }
+
+  #posts:hover{
+    width: 50%;
+    height: 10%;
+  }
+  .textPost{
+    word-wrap: break-word;
+  }
+
+  .titlePost{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #000;
+    margin-bottom: 10px;
+  }
+
+
+  .titlePost p{
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  .right{
+    margin-left: auto;
+    margin-right: 0; 
+  }
+
+</style>

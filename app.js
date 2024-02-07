@@ -62,13 +62,17 @@ app.get('/login', (req, res) => {
 
 app.get('/about', (req, res) => {
 
-    const dados = [
-        { titulo: "Post 1", conteudo: "Conteúdo post 1"},
-        { titulo: "Post 2", conteudo: "Conteúdo post 2"},
-        { titulo: "Post 3", conteudo: "Conteúdo post 3"}
-    ];
+        res.render('pages/about', { req: req });
+});
 
-        res.render('pages/about', { req: req, posts: dados });
+app.get('/Posts', (req, res) => {
+
+        db.query('SELECT * FROM posts', (err, result) => {
+          if (err) throw err;
+          res.render('pages/Posts', { req: req, posts: result});
+        });
+
+        
 });
 
 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <%- include('../partials/head'); %>
+
+    <link rel="stylesheet" href="posts.css">
+</head>
+
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+        <% if(req.session.loggedin) { %>
+        <%- include('../partials/menu_dashboard'); %>
+        <% } %>        
+    </header>
+    <nav align-items="center" class="navbar navbar-expand-lg navbar-dark bg-dark"><div class="white" >Blog-Veja as postagens feitas</div></nav>
+    <main>
+        <br>
+        <%- include('../partials/posts')  %>
+        <br>
+    </main>
+
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+    
+
+</body>
