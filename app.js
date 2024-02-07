@@ -62,17 +62,15 @@ app.get('/login', (req, res) => {
 
 app.get('/about', (req, res) => {
 
-        res.render('pages/about', { req: req });
+    res.render('pages/about', { req: req });
 });
 
 app.get('/Posts', (req, res) => {
 
-        db.query('SELECT * FROM posts', (err, result) => {
-          if (err) throw err;
-          res.render('pages/Posts', { req: req, posts: result});
-        });
-
-        
+    db.query('SELECT * FROM posts', (err, result) => {
+        if (err) throw err;
+        res.render('pages/Posts', { req: req, posts: result });
+    });
 });
 
 
