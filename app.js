@@ -46,9 +46,10 @@ app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
     // Passe a variável 'req' para o template e use-a nas páginas para renderizar partes do HTML conforme determinada condição
     // Por exemplo de o usuário estive logado, veja este exemplo no arquivo views/partials/header.ejs
+    console.log(`/login -> session = ${JSON.stringify(req.session)}`);
     res.render('pages/index', { req: req });
     // Caso haja necessidade coloque pontos de verificação para verificar pontos da sua logica de negócios
-    console.log(`${req.session.username ? `Usuário ${req.session.username} logado no IP ${req.connection.remoteAddress}` : 'Usuário não logado.'}  `);
+    console.log(`${req.session.username ? `Usuário ${req.session.username} logado no IP ${req.connection.remoteAddress} TypeUser ${req.session.typeuser}` : 'Usuário não logado.'}  `);
     //console.log(req.connection)
     ;
 });
@@ -56,6 +57,7 @@ app.get('/', (req, res) => {
 // Rota para a página de login
 app.get('/login', (req, res) => {
     // Quando for renderizar páginas pelo EJS, passe parametros para ele em forma de JSON
+
     res.render('pages/login', { req: req });
 });
 
@@ -70,6 +72,14 @@ app.get('/Posts', (req, res) => {
     db.query('SELECT * FROM posts', (err, result) => {
         if (err) throw err;
         res.render('pages/Posts', { req: req, posts: result });
+    });
+});
+
+app.get('/PostsDelete', (req, res) => {
+
+    db.query('DELETE FROM posts', (err, result) => {
+        if (err) throw err;
+        res.redirect("/Posts")
     });
 });
 
@@ -96,15 +106,19 @@ app.get('/myposts/:id', (req, res) => {
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
-    const query = 'SELECT * FROM users WHERE username = ? AND password = SHA1(?)';
+    const query = 'SELECT * FROM users WHERE username = ? AND password = SHA1(?) ';
 
     db.query(query, [username, password], (err, results) => {
         if (err) throw err;
-
+        console.log(`${JSON.stringify(results)}`)
         if (results.length > 0) {
             req.session.loggedin = true;
             req.session.username = username;
+            req.session.typeuser = results.typeuser
             res.redirect('/dashboard');
+
+            console.log(`${req.session.username ? `Usuário ${req.session.username} logado no IP ${req.connection.remoteAddress} TypeUser ${req.session.typeuser}` : 'Usuário não logado.'}  `);
+
         } else {
             // res.send('Credenciais incorretas. <a href="/">Tente novamente</a>');
             res.redirect('/login_failed');
@@ -173,11 +187,11 @@ app.get('/cadastrar', (req, res) => {
 
 // Rota para efetuar o cadastro de usuário no banco de dados
 app.post('/cadastrar', (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, typeuser } = req.body;
 
     // Verifica se o usuário já existe
     const query = 'SELECT * FROM users WHERE username = ? AND password = SHA1(?)';
-    db.query(query, [username, password], (err, results) => {
+    db.query(query, [username, password, typeuser], (err, results) => {
         if (err) throw err;
         // Caso usuário já exista no banco de dados, redireciona para a página de cadastro inválido
         if (results.length > 0) {
@@ -185,9 +199,9 @@ app.post('/cadastrar', (req, res) => {
             res.redirect('/register_failed');
         } else {
             // Cadastra o usuário caso não exista
-            const query = 'INSERT INTO users (username, password) VALUES (?, SHA1(?))';
+            const query = 'INSERT INTO users (username, password, typeuser) VALUES (?, SHA1(?), "user")';
             console.log(`POST /CADASTRAR -> query -> ${query}`);
-            db.query(query, [username, password], (err, results) => {
+            db.query(query, [username, password, typeuser], (err, results) => {
                 console.log(results);
                 //console.log(`POST /CADASTRAR -> results -> ${results}`);
 

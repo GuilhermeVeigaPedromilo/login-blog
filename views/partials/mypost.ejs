@@ -11,8 +11,7 @@
         <div class="date">
           <% console.log(`myposts: ${row.id}`) %>
           <p>Autor: <%= row.nome %> id: <% row.id %><br><%= row.data %></p>
-          <a href="/myposts/<%= row.id %>">DELETE</a>
-          <!-- <form value="${id}" method="delete" action="/myposts" ><button type="submit" >DELETE</button> </form> -->
+          <a class="btn btn-danger" href="/myposts/<%= row.id %>">DELETE</a> 
         </div>
       </div>
     </div>
@@ -28,7 +27,6 @@
           <% console.log(`myposts: ${row.id}`) %>
           <p>Autor: <%= row.nome %> id: <% row.id %><br><%= row.data %></p>
           <a class="btn btn-danger" href="/myposts/<%= row.id %>">DELETE</a> 
-          <!-- <form method="delete" action="/myposts/<%= `${row.id}` %>" ><button type="submit" >DELETE</button> </form> -->
         </div>
       </div>
     </div><br>
