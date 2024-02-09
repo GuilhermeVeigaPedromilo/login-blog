@@ -73,6 +73,24 @@ app.get('/Posts', (req, res) => {
     });
 });
 
+app.get('/myposts', (req, res) => {
+
+    db.query('SELECT * FROM posts WHERE nome=?', [req.session.username], (err, row) => {
+        if (err) throw err;
+        res.render('pages/myposts', { req: req, dados: row });
+        console.log(`rota /myposts - ${JSON.stringify(row)}`)
+    });
+});
+
+app.get('/myposts/:id', (req, res) => {
+    const id = req.params.id;
+
+    db.query('DELETE FROM posts WHERE id=?', [id], (err, row)=> {
+        console.log("Selecionei a postagem de id:", id);
+        res.redirect('/myposts');
+    });
+  });
+
 
 // Rota para processar o formulário de login
 app.post('/login', (req, res) => {

@@ -1,15 +1,18 @@
 
 <div>
-<% posts.forEach(post => { %>
-  <% if (post.id % 2 === 0) { %>
+  <% dados.forEach(function(row) { %>
+  <% if (row.id % 2 === 0) { %>
     <div id="posts">
       <div class="titlePost">
-        <p><%= post.titulo %></p>
+        <p><%= row.titulo %></p>
       </div>
       <div class="textPost">
-        <p><%- post.conteudo %></p>
+        <p><%- row.conteudo %></p>
         <div class="date">
-          <p>Autor: <%= post.nome %><br><%= post.data %></p>
+          <% console.log(`myposts: ${row.id}`) %>
+          <p>Autor: <%= row.nome %> id: <% row.id %><br><%= row.data %></p>
+          <a href="/myposts/<%= row.id %>">DELETE</a>
+          <!-- <form value="${id}" method="delete" action="/myposts" ><button type="submit" >DELETE</button> </form> -->
         </div>
       </div>
     </div>
@@ -17,12 +20,15 @@
   <% } else  { %>
     <div id="posts" class="right">
       <div class="titlePost">
-        <p><%= post.titulo %></p>
+        <p><%= row.titulo %></p>
       </div>
       <div class="textPost">
-        <p><%= post.conteudo %></p>
+        <p><%= row.conteudo %></p>
         <div class="date">
-          <p>Autor: <%= post.nome %><br><%= post.data %></p>
+          <% console.log(`myposts: ${row.id}`) %>
+          <p>Autor: <%= row.nome %> id: <% row.id %><br><%= row.data %></p>
+          <a class="btn btn-danger" href="/myposts/<%= row.id %>">DELETE</a> 
+          <!-- <form method="delete" action="/myposts/<%= `${row.id}` %>" ><button type="submit" >DELETE</button> </form> -->
         </div>
       </div>
     </div><br>

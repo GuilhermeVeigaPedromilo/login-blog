@@ -11,3 +11,9 @@ nav{
     align-items: center;
     text-align: center;
 }
+
+button {
+    border-radius: 1px solid black;
+    width: 85px;
+    height: 10px;
+}
