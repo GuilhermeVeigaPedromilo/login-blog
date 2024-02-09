@@ -7,6 +7,9 @@
         <li class="nav-item">
             <a class="nav-link" href="/about">About</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Posts">Blog</a>
+        </li>
         <% if(!req.session.loggedin){ %>
             <li class="nav-item">
                 <a class="nav-link" href="/login">Login</a>
@@ -19,7 +22,7 @@
                 <a class="nav-link" href="/dashboard">Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/Posts">Blog</a>
+                <a class="nav-link" href="/cadastrar_posts">Inserir Postagem</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Sair (<%= req.session.username %>)</a>

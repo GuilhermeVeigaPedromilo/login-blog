@@ -1,0 +1,11 @@
+html {
+    background-color: rgb(229, 226, 226);
+}
+
+header {
+    transition: 0.5s;
+}
+
+header:hover {
+    font-size: 105%;
+}
