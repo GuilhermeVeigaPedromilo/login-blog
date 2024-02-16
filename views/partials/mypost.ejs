@@ -6,14 +6,13 @@
     <div id="posts">
       <div class="titlePost">
         <p><%= row.titulo %></p>
-        <div><a href="/editpost/<%= row.id %>" >EDIT</a></div>
       </div>
       <div class="textPost">
         <p><%- row.conteudo %></p>
         <div class="date">
           <% console.log(`myposts: ${row.id}`) %>
           <p>Autor: <%= row.nome %><br><%= row.data.toLocaleString('pt-BR', {dateStyle: 'short', timeStyle: 'short'}) %></p>
-          <a class="btn btn-danger" href="/myposts/<%= row.id %>">DELETE</a> 
+          <a class="btn btn-danger" href="/myposts/<%= row.id %>">DELETE</a> <div class="edit" ><a href="/updatepost/<%= row.id %>" >EDIT</a></div>
         </div>
       </div>
     </div>
@@ -22,14 +21,13 @@
     <div id="posts" class="right">
       <div class="titlePost">
         <p><%= row.titulo %></p>
-        <div><a href="/updatepost/<%= row.id %>" >EDIT</a></div>
       </div>
       <div class="textPost">
         <p><%= row.conteudo %></p>
         <div class="date">
           <% console.log(`myposts: ${row.id}`) %>
           <p>Autor: <%= row.nome %><br><%= row.data.toLocaleString('pt-BR', {dateStyle: 'short', timeStyle: 'short'}) %></p>
-          <a class="btn btn-danger" href="/myposts/<%= row.id %>">DELETE</a> 
+          <a class="btn btn-danger" href="/myposts/<%= row.id %>">DELETE</a><div class="edit" ><a href="/updatepost/<%= row.id %>" >EDIT</a></div>
         </div>
       </div>
     </div><br>
@@ -51,7 +49,7 @@
 
   #posts{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 21px;
     width: 40%;
     background-color: white;
     border-radius: 20px;
@@ -93,4 +91,8 @@
     color: #979797;
   }
 
+  .edit {
+    margin-left: 80%;
+    margin-top: -5%;
+  }
 </style>

@@ -142,12 +142,6 @@ app.get('/myposts/:id', (req, res) => {
             throw err;
         }
 
-        if (result.length === 0) {
-            // Se não encontrar o post, renderiza uma página de erro ou redireciona para outra rota
-            res.status(404).send('Post não encontrado');
-            return;
-        }
-
         // Renderiza a página de edição de post com os dados do post recuperado
         res.render('pages/updatepost', { req: req, post: result[0] });
     });
