@@ -1,35 +1,37 @@
-
 <div>
-<% posts.forEach(post => { %>
-  <% if (post.id % 2 === 0) { %>
-    <div id="posts">
-      <div class="titlePost">
-        <p><%= post.titulo %></p>
-      </div>
-      <div class="textPost">
-        <p><%- post.conteudo %></p>
-        <div class="date">
-          <p>Autor: <%= post.nome %><br><%= post.data %></p>
+  <% if (TotaldeLinhas > 0) { %>
+  <h4><P >Total de posts: <%- TotaldeLinhas %></P></h4>
+  <% posts.forEach(post => { %>
+    <% if (post.id % 2 === 0) { %>
+      <div id="posts">
+        <div class="titlePost">
+          <p><%= post.titulo %></p>
+        </div>
+        <div class="textPost">
+          <p><%- post.conteudo %></p>
+          <div class="date">
+            <p>Autor: <%= post.nome %><br><%= post.data.toLocaleString('pt-BR', {dateStyle: 'short', timeStyle: 'short'}) %></p>
+          </div>
         </div>
       </div>
-    </div>
-    <br>
-  <% } else  { %>
-    <div id="posts" class="right">
-      <div class="titlePost">
-        <p><%= post.titulo %></p>
-      </div>
-      <div class="textPost">
-        <p><%= post.conteudo %></p>
-        <div class="date">
-          <p>Autor: <%= post.nome %><br><%= post.data %></p>
+      <br>
+    <% } else  { %>
+      <div id="posts" class="right">
+        <div class="titlePost">
+          <p><%= post.titulo %></p>
         </div>
-      </div>
+        <div class="textPost">
+          <p><%= post.conteudo %></p>
+          <div class="date">
+            <p>Autor: <%= post.nome %><br><%= post.data.toLocaleString('pt-BR', {dateStyle: 'short', timeStyle: 'short'}) %></p>
+          </div>
+        </div>
+      </div><br>
     </div><br>
-  </div><br>
-  <% } %>
-<% }); %>
-
+    <% } %>
+  <% }); %>
+  <% }else { %>
+<% } %>
 </div>
 
 <style>

@@ -1,16 +1,18 @@
 
 <div>
+  <h4><P >Total de posts: <%- TotaldeLinhas %></P></h4>
   <% dados.forEach(function(row) { %>
   <% if (row.id % 2 === 0) { %>
     <div id="posts">
       <div class="titlePost">
         <p><%= row.titulo %></p>
+        <div><a href="/editpost/<%= row.id %>" >EDIT</a></div>
       </div>
       <div class="textPost">
         <p><%- row.conteudo %></p>
         <div class="date">
           <% console.log(`myposts: ${row.id}`) %>
-          <p>Autor: <%= row.nome %> id: <% row.id %><br><%= row.data %></p>
+          <p>Autor: <%= row.nome %><br><%= row.data.toLocaleString('pt-BR', {dateStyle: 'short', timeStyle: 'short'}) %></p>
           <a class="btn btn-danger" href="/myposts/<%= row.id %>">DELETE</a> 
         </div>
       </div>
@@ -20,12 +22,13 @@
     <div id="posts" class="right">
       <div class="titlePost">
         <p><%= row.titulo %></p>
+        <div><a href="/updatepost/<%= row.id %>" >EDIT</a></div>
       </div>
       <div class="textPost">
         <p><%= row.conteudo %></p>
         <div class="date">
           <% console.log(`myposts: ${row.id}`) %>
-          <p>Autor: <%= row.nome %> id: <% row.id %><br><%= row.data %></p>
+          <p>Autor: <%= row.nome %><br><%= row.data.toLocaleString('pt-BR', {dateStyle: 'short', timeStyle: 'short'}) %></p>
           <a class="btn btn-danger" href="/myposts/<%= row.id %>">DELETE</a> 
         </div>
       </div>

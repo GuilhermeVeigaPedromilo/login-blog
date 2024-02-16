@@ -68,19 +68,28 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/Posts', (req, res) => {
-    db.query('SELECT * FROM posts', (err, result) => {
-        res.render('pages/Posts', { req: req, posts: result });
-        const query = 'SELECT COUNT(*) AS total_linhas FROM posts';
-        db.query(query, (err, results) => {
-    if (err) {
-        console.error('Erro ao contar linhas:', err);
-        throw err;
-    }
-    
-    console.log( {TotaldeLinhas: results[0].total_linhas});
-});
+    const selectCount = 'SELECT COUNT(*) AS total_linhas FROM posts';
+    const selectPosts = 'SELECT * FROM posts';
+
+    db.query(selectCount, (err, countResult) => {
+        if (err) {
+            console.error('Erro ao contar linhas:', err);
+            throw err;
+        }
+
+        db.query(selectPosts, (err, postsResult) => {
+            if (err) {
+                console.error('Erro ao recuperar posts:', err);
+                throw err;
+            }
+
+            const totalLinhas = countResult[0].total_linhas;
+            res.render('pages/Posts', { req: req, posts: postsResult, TotaldeLinhas: totalLinhas });
+            console.log({ TotaldeLinhas: totalLinhas });
+        });
     });
 });
+
 
 app.get('/PostsDelete', (req, res) => {
 
@@ -91,13 +100,28 @@ app.get('/PostsDelete', (req, res) => {
 });
 
 app.get('/myposts', (req, res) => {
+    const selectCount = 'SELECT COUNT(*) AS total_linhas FROM posts WHERE nome=?';
+    const selectPostsRow = 'SELECT * FROM posts WHERE nome=?';
 
-    db.query('SELECT * FROM posts WHERE nome=?', [req.session.username], (err, row) => {
-        if (err) throw err;
-        res.render('pages/myposts', { req: req, dados: row });
-        console.log(`rota /myposts - ${JSON.stringify(row)}`)
+    db.query(selectCount, [req.session.username], (err, countResult) => {
+        if (err) {
+            console.error('Erro ao contar linhas:', err);
+            throw err;
+        }
+
+        db.query(selectPostsRow, [req.session.username], (err, row) => {
+            if (err) {
+                console.error('Erro ao recuperar posts:', err);
+                throw err;
+            }
+
+            const totalLinhasrow = countResult[0].total_linhas;
+            res.render('pages/myposts', { req: req, dados: row, TotaldeLinhas: totalLinhasrow });
+            console.log(`rota /myposts - ${JSON.stringify(row)}`);
+        });
     });
 });
+
 
 app.get('/myposts/:id', (req, res) => {
     const id = req.params.id;
@@ -107,6 +131,44 @@ app.get('/myposts/:id', (req, res) => {
         res.redirect('/myposts');
     });
   });
+
+  app.get('/updatepost/:id', (req, res) => {
+    const id = req.params.id;
+    const selectPost = 'SELECT * FROM posts WHERE id=?';
+
+    db.query(selectPost, [id], (err, result) => {
+        if (err) {
+            console.error('Erro ao recuperar post:', err);
+            throw err;
+        }
+
+        if (result.length === 0) {
+            // Se não encontrar o post, renderiza uma página de erro ou redireciona para outra rota
+            res.status(404).send('Post não encontrado');
+            return;
+        }
+
+        // Renderiza a página de edição de post com os dados do post recuperado
+        res.render('pages/updatepost', { req: req, post: result[0] });
+    });
+});
+
+app.post('/updatepost/:postid', (req, res) => {
+    const postid = req.params.postid;
+    const { titulo, conteudo } = req.body;
+
+    const updatePost = 'UPDATE posts SET titulo=?, conteudo=? WHERE id=?';
+
+    db.query(updatePost, [titulo, conteudo, postid], (err, result) => {
+        if (err) {
+            console.error('Erro ao atualizar post:', err);
+            throw err;
+        }
+
+        // Redireciona para a página de exibição do post após a atualização
+        res.redirect('/myposts');
+    });
+});
 
 
   app.post('/login', (req, res) => {

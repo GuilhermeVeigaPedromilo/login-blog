@@ -1,0 +1,13 @@
+<h3 style="text-align: center;">Editar postagem</h3>
+                <form action="/updatepost/<%= post.id %>" method="POST">
+                    <div class="form-group">
+                        <div><label for="titulo">Título da postagem</label></div>
+                        <div><textarea type="text" id="titulo" name="titulo" required class="form-control"><%=post.titulo %></textarea></div>
+                    </div>
+                    <div class="form-group">
+                        <div><label for="conteudo">Conteúdo da postagem</label></div>
+                        <div> <textarea type="text" id="conteudo" name="conteudo" required class="form-control"><%- post.conteudo %></textarea></div>
+                    </div>
+                    <!-- TODO: Implementar um campo para verificar na página se as senhas coincidem -->
+                    <div><button type="submit" class="form-control btn btn-dark">Inserir nova postagem</button></div>
+                </form>

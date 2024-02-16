@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+
+<head>
+    <%- include('../partials/head'); %>
+    <% if(req.session.loggedin) { %>
+    <%- include('../partials/menu_dashboard'); %>
+    <% } %>
+</head>
+
+<body class="container">
+
+    <header class="container">
+        <%- include('../partials/header'); %>
+    </header>
+    <main class="container">
+        <!-- <div class="jumbotron"></div> -->
+        <div class="container-sm border border-danger rounded-lg">
+            <div class="form-group">
+                <%-include('../partials/editpost') %>
+            </div>
+        </div>
+        <div class="fixed-bottom">...</div>
+    </main>
+
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+</body>
+
+</html>
