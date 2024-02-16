@@ -141,7 +141,6 @@ app.get('/myposts/:id', (req, res) => {
             console.error('Erro ao recuperar post:', err);
             throw err;
         }
-
         // Renderiza a página de edição de post com os dados do post recuperado
         res.render('pages/updatepost', { req: req, post: result[0] });
     });
