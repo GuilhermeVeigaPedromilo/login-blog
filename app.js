@@ -68,10 +68,17 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/Posts', (req, res) => {
-
     db.query('SELECT * FROM posts', (err, result) => {
-        if (err) throw err;
         res.render('pages/Posts', { req: req, posts: result });
+        const query = 'SELECT COUNT(*) AS total_linhas FROM posts';
+        db.query(query, (err, results) => {
+    if (err) {
+        console.error('Erro ao contar linhas:', err);
+        throw err;
+    }
+    
+    console.log( {TotaldeLinhas: results[0].total_linhas});
+});
     });
 });
 
@@ -102,8 +109,7 @@ app.get('/myposts/:id', (req, res) => {
   });
 
 
-// Rota para processar o formulário de login
-app.post('/login', (req, res) => {
+  app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
     const query = 'SELECT * FROM users WHERE username = ? AND password = SHA1(?) ';
@@ -114,7 +120,7 @@ app.post('/login', (req, res) => {
         if (results.length > 0) {
             req.session.loggedin = true;
             req.session.username = username;
-            req.session.typeuser = results.typeuser
+            req.session.typeuser = results[0].typeuser; // Assim typeuser não deixa de funcionar e fique como 'undefined'
             res.redirect('/dashboard');
 
             console.log(`${req.session.username ? `Usuário ${req.session.username} logado no IP ${req.connection.remoteAddress} TypeUser ${req.session.typeuser}` : 'Usuário não logado.'}  `);
@@ -125,6 +131,7 @@ app.post('/login', (req, res) => {
         }
     });
 });
+
 
 // Rota para processar o formulário de caastro depostagem
 app.post('/cadastrar_posts', (req, res) => {

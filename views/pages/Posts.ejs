@@ -15,8 +15,18 @@
         <% } %>        
     </header>
     <nav align-items="center" class="navbar navbar-expand-lg navbar-dark bg-dark"><div class="white" >Blog-Veja as postagens feitas</div><br>
-            <a class="btn btn-danger" href="/PostsDelete">DELETE</a>
-</nav>
+            <% if (req.session.typeuser === 'admin') { %>
+            <div class="left" ><a class="btn btn-danger" href="/PostsDelete">DELETE</a></div>
+        </nav>
+        <style>
+            .left {
+                display: block;
+                margin-left: 10%;
+            }
+        </style>
+        <% } else { %>
+        </nav>
+        <% } %>
     <main>
         <br>
         <%- include('../partials/posts')  %>
